@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.infosys.LSP.LSP.entity.Acknowledge;
 import com.infosys.LSP.LSP.entity.LoanApplicationDetails;
 import com.infosys.LSP.LSP.service.CreateLoanSevice;
 
@@ -19,16 +18,18 @@ public class LoanRestController {
 	public LoanRestController(CreateLoanSevice thecreateLoanService) {
 		createLoanService= thecreateLoanService;
 	}
-	@RequestMapping(value = "/V1/consent/createLoan", method = RequestMethod.POST, produces = "application/json")	
-	public Acknowledge createLoanApplication(@RequestBody LoanApplicationDetails loanApplicationDetails ) {
+	@RequestMapping(value ="/createLoan", method = RequestMethod.POST, produces = "application/json")	
+	public LoanApplicationDetails createLoanApplication(@RequestBody LoanApplicationDetails loanApplicationDetails ) {
 		System.out.println("inside createloan");
-		Acknowledge ack=new Acknowledge();
-		Acknowledge ack1=new Acknowledge();
+		LoanApplicationDetails ack=new LoanApplicationDetails();
+		LoanApplicationDetails ack1=new LoanApplicationDetails();
 		ack= createLoanService.crLoanApp(loanApplicationDetails);
 		if(ack==null) {
+			ack1.setVersion(1.0f);
 			ack1.setError(0);
-			return ack1;
+			return ack1;			
 		}
-		return ack;
+		
+		return  ack;
 	}
 }

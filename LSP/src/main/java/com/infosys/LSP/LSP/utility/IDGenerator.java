@@ -7,16 +7,11 @@ public class IDGenerator {
 		
 	}
 	
-	public String idGeneration() {
-		
-		
-		
-		
+	public String idGeneration() {			
 		Random random = new Random();
         int val = random.nextInt();
         String Hex = new String();
-        Hex = Integer.toHexString(val);
-       
+        Hex = Integer.toHexString(val);       
 		return Hex ;
 	}
 

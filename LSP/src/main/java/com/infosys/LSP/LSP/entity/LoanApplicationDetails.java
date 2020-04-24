@@ -6,13 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="loanApplicationDetails")
+@Table(name="loan", schema = "employee_directory")
 public class LoanApplicationDetails {
 	@Id
 	@Column(name="requestid")
 	private String requestId;
 	
-	@Column(name="createDate")
+	@Column(name="create_date")
 	private String createDate;
 	
 	@Column(name="traceid")
@@ -21,25 +21,27 @@ public class LoanApplicationDetails {
 	@Column(name="type")
 	private String type;
 	
-	@Column(name="vesion")
+	@Column(name="version")
 	private float  version;
+	
+	@Column(name="error")
+	private int error;
 	
 	public LoanApplicationDetails() {
 		
 	}
 
-	public LoanApplicationDetails(String requestId, String createDate, String traceId, String type, float version) {
+	public LoanApplicationDetails(String createDate, String traceId, String type, float version, int error) {
 		super();
-		this.requestId = requestId;
 		this.createDate = createDate;
 		this.traceId = traceId;
 		this.type = type;
 		this.version = version;
+		this.error = error;
 	}
 
 	public String getRequestId() {
 		return requestId;
-		
 	}
 
 	public void setRequestId(String requestId) {
@@ -78,21 +80,19 @@ public class LoanApplicationDetails {
 		this.version = version;
 	}
 
+	public int getError() {
+		return error;
+	}
+
+	public void setError(int error) {
+		this.error = error;
+	}
+
 	@Override
 	public String toString() {
 		return "LoanApplicationDetails [requestId=" + requestId + ", createDate=" + createDate + ", traceId=" + traceId
-				+ ", type=" + type + ", version=" + version + "]";
+				+ ", type=" + type + ", version=" + version + ", error=" + error + "]";
 	}
-
-	
-	
-	
-	
-	
-	  
-	
-	 
-	
 	
 
 }
