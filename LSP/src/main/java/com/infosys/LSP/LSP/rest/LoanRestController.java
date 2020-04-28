@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.infosys.LSP.LSP.entity.Acknowledge;
 import com.infosys.LSP.LSP.entity.LoanApplicationDetails;
 import com.infosys.LSP.LSP.service.CreateLoanSevice;
 
@@ -32,4 +34,16 @@ public class LoanRestController {
 		
 		return  ack;
 	}
+	
+	@RequestMapping(value ="/createLoanResponse", method = RequestMethod.POST, produces = "application/json")	
+	public  Acknowledge createLoanApplicationResponse(@RequestBody Acknowledge  acknowledge) {
+		Acknowledge  ack=new Acknowledge();
+		ack=createLoanService.createLoanApplicationResponse(acknowledge);
+		if(ack==null) {
+		   acknowledge.setRejectionDetails("null value");
+		   return  acknowledge;
+		}
+		return acknowledge;
+	}
+	
 }
