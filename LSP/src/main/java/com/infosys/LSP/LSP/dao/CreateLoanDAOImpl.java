@@ -51,7 +51,7 @@ public class CreateLoanDAOImpl implements CreateLoanDAO {
 		List results = query.list();
 		
 		if(results==null) {
-			System.out.println("nulllllllllll");
+			System.out.println("nulllllllllll"); 
 			return null;
 			
 		}
