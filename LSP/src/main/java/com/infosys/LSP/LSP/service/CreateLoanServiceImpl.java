@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.infosys.LSP.LSP.dao.CreateLoanDAO;
 import com.infosys.LSP.LSP.entity.Acknowledge;
 import com.infosys.LSP.LSP.entity.LoanApplicationDetails;
+import com.infosys.LSP.LSP.entity.LoanDetail;
 @Service
 public class CreateLoanServiceImpl implements CreateLoanSevice {
 	private  CreateLoanDAO createLoanDAO;
@@ -30,6 +31,12 @@ public class CreateLoanServiceImpl implements CreateLoanSevice {
 	public Acknowledge createLoanApplicationResponse(Acknowledge acknowledge) {
 		
 		return createLoanDAO.createLoanApplicationResponse(acknowledge);
+	}
+
+	@Override
+	public LoanDetail createLoanApplication(LoanDetail loanDetail) {
+		// TODO Auto-generated method stub
+		return createLoanDAO.createLoanApplication(loanDetail);
 	}
 
 }
