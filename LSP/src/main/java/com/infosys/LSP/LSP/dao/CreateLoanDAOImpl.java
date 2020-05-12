@@ -1,12 +1,15 @@
 package com.infosys.LSP.LSP.dao;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.google.gson.Gson;
 import com.infosys.LSP.LSP.entity.Acknowledge;
 import com.infosys.LSP.LSP.entity.Borrower;
 import com.infosys.LSP.LSP.entity.ContactDetail;
@@ -63,34 +66,38 @@ public class CreateLoanDAOImpl implements CreateLoanDAO {
 	public LoanDetail createLoanApplication(LoanDetail loanDetail) {
 		Session  currentSession=entitymanager.unwrap(Session.class);
 		IDGenerator idgenerate=new IDGenerator() ;
-
+		
+		
 
 		Borrower br=new Borrower();
-		ContactDetail cd=new ContactDetail();		
+	//	ContactDetail cd=new ContactDetail();		
 		String transactionId=idgenerate.idGeneration();			
 		loanDetail.setTransactionId(transactionId);	
 		
 		br.setId(idgenerate.idGeneration());	   
 		br.setContactDetail(loanDetail.getBorrower().getContactDetail());
 		br.setFirstName(loanDetail.getBorrower().getFirstName());
+		
 		br.setLastName(loanDetail.getBorrower().getLastName());
+		
+		
 		br.setLoanDetail(loanDetail);	
 		
 		
-		cd.setType(loanDetail.getBorrower().getContactDetail().getType());
-		cd.setEmail(loanDetail.getBorrower().getContactDetail().getEmail());	
-		cd.setId(idgenerate.idGeneration());
-	
-		
-		cd.setBorrower(br);
-		br.setContactDetail(cd);
+		List<ContactDetail> cdnew=null;
+		cdnew=loanDetail.getBorrower().getContactDetail();
+		cdnew.get(0).setId(idgenerate.idGeneration());;	
+		cdnew.get(0).setEmail(br.getContactDetail().get(0).getEmail());
+		cdnew.get(0).setType(br.getContactDetail().get(0).getType());
+		cdnew.get(0).setBorrower(br);	
+		br.setContactDetail(cdnew);
 		br.setLoanDetail(loanDetail);
 		loanDetail.setBorrower(br);
 		currentSession.beginTransaction();
-		currentSession.persist(cd);			
-		currentSession.getTransaction().commit();
-		
-		currentSession.close();
+		for(ContactDetail temp:cdnew)
+			currentSession.persist(temp);			
+		currentSession.getTransaction().commit();		
+		currentSession.close();	
 		
 		
 		

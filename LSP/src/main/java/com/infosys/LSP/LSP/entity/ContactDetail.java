@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,12 +18,12 @@ public class ContactDetail {
 	
 	@Column(name="email")
 	private String email;
-	
+
 	
 	@Column(name="type")
 	private String type;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(targetEntity=Borrower.class ,cascade=CascadeType.PERSIST)
 	@JoinColumn(name="borrower_id")
 	private Borrower borrower;
 	

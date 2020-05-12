@@ -6,15 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.infosys.LSP.LSP.Bean.BorrowerBO;
 import com.infosys.LSP.LSP.Bean.ContactDetailBO;
 import com.infosys.LSP.LSP.Bean.LoanDetailBO;
 import com.infosys.LSP.LSP.entity.Acknowledge;
-import com.infosys.LSP.LSP.entity.Borrower;
 import com.infosys.LSP.LSP.entity.LoanApplicationDetails;
 import com.infosys.LSP.LSP.entity.LoanDetail;
 import com.infosys.LSP.LSP.service.CreateLoanSevice;
-
 
 @RestController
 @RequestMapping("/api")
@@ -52,9 +51,9 @@ public class LoanRestController {
 	}
 	
 	@RequestMapping(value ="/createloanapplication", method = RequestMethod.POST, produces = "application/json")
-	public LoanDetailBO createLoanApplication(@RequestBody  LoanDetail loanDetail) {
+	public LoanDetailBO createLoanApplication(@RequestBody LoanDetail  loanDetail) {
 		LoanDetail newloanDetail=new LoanDetail();
-		
+	
 		LoanDetailBO  loanDetailBO= new LoanDetailBO();
 		BorrowerBO   borrower=new BorrowerBO();
 		ContactDetailBO  contactDetailBO=new ContactDetailBO();
@@ -63,8 +62,8 @@ public class LoanRestController {
 		loanDetailBO.setType(newloanDetail.getType());
 		borrower.setId(newloanDetail.getBorrower().getId());
 		borrower.setFirstName(newloanDetail.getBorrower().getFirstName());
-		contactDetailBO.setId(newloanDetail.getBorrower().getContactDetail().getId());
-		contactDetailBO.setEmail(newloanDetail.getBorrower().getContactDetail().getEmail());
+		contactDetailBO.setId(newloanDetail.getBorrower().getContactDetail().get(0).getId());
+		contactDetailBO.setEmail(newloanDetail.getBorrower().getContactDetail().get(0).getEmail());
 		borrower.setContactDetailBO(contactDetailBO);
 		loanDetailBO.setBorrowerBO(borrower);	
 		return loanDetailBO;

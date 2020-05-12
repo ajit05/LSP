@@ -1,10 +1,14 @@
 package com.infosys.LSP.LSP.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,10 +31,15 @@ public class Borrower {
 	
 	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="transaction_id")
-	private LoanDetail loanDetail;
+	private LoanDetail loanDetail;  
 	
-	@OneToOne(mappedBy="borrower")	
-	private ContactDetail contactDetail;
+	
+	
+	/*@OneToOne(mappedBy="borrower")	
+	private ContactDetail contactDetail;*/
+	
+	@OneToMany(mappedBy="borrower")
+	private List<ContactDetail> contactDetail=new ArrayList<ContactDetail>();
 	
 	
 	public  Borrower() {
@@ -83,19 +92,31 @@ public class Borrower {
 	public void setLoanDetail(LoanDetail loanDetail) {
 		this.loanDetail = loanDetail;
 	}
-	public ContactDetail getContactDetail() {
-		return contactDetail;
-	}
-
-	public void setContactDetail(ContactDetail contactDetail) {
-		this.contactDetail = contactDetail;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "Borrower [Id=" + Id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + " contactDetail=" + contactDetail + "]";
 	}
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="Borrower",cascade= {CascadeType.PERSIST})
+	public List<ContactDetail> getContactDetail() {
+		return contactDetail;
+	}
+
+	public void setContactDetail(List<ContactDetail> contactDetail) {
+		this.contactDetail = contactDetail;
+	}
+
+	/*public ContactDetail getContactDetail() {
+		return contactDetail;
+	}
+
+	public void setContactDetail(ContactDetail contactDetail) {
+		this.contactDetail = contactDetail;
+	}*/
+	
+	
 	
 	
 	
