@@ -20,7 +20,8 @@ public class CreateLoanApplicationController {
 			this.createLoanApplicationService=theCreateLoanApplicationService;
 	}
 	
-	
+	@RequestMapping(value ="/createLoanApp", method = RequestMethod.POST, produces = "application/json")	
+	public LoanApplicationStatus createLoanApplication(@RequestBody InvoiceDetailEntity invoiceDetailEntity) throws Exception{
 		
 		
 		//   returnng null
