@@ -3,8 +3,10 @@ package com.infosys.LSP.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -14,87 +16,99 @@ public class ColletralDetailEntity {
 
 	@Id
 	@Column(name="collateral_Primary_id")
-	private String colletralId;	
+	private String collateralPrimaryId;	
 	
 	@Column(name="collateral_Primary_id_Type")
-	private String colletralIdType;
+	private String collateralPrimaryIdType;
 	
 	@Column(name="collateral_type")
-	private String colletralType;
+	private String type;
 	
 	@Column(name="collateral_additionalIdentifiers")
-	private String colletralAdditioanlIdentifiers;
+	private String additionalIdentifiers;
+	
+	@Column(name="Invoice_date")
+	private String date;
+	
+	/*@OneToOne(mappedBy="colletralDetailEntity",fetch = FetchType.LAZY)
+	private ValuationDetailEntity valuation;*/
+
 	
 	@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@ManyToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
 	
 	public ColletralDetailEntity() {
+		System.out.println("in colletral c entity");
 		
 	}
 
-
-	public ColletralDetailEntity(String colletralIdType, String colletralType, String colletralAdditioanlIdentifiers) {
+	public ColletralDetailEntity(String collateralPrimaryIdType, String type, String additionalIdentifiers,
+			String date) {
 		super();
-		this.colletralIdType = colletralIdType;
-		this.colletralType = colletralType;
-		this.colletralAdditioanlIdentifiers = colletralAdditioanlIdentifiers;
+		this.collateralPrimaryIdType = collateralPrimaryIdType;
+		this.type = type;
+		this.additionalIdentifiers = additionalIdentifiers;
+		this.date = date;
 	}
 
 
-	public String getColletralId() {
-		return colletralId;
+
+
+
+	public String getCollateralPrimaryId() {
+		return collateralPrimaryId;
 	}
 
 
-	public void setColletralId(String colletralId) {
-		this.colletralId = colletralId;
+	public void setCollateralPrimaryId(String collateralPrimaryId) {
+		this.collateralPrimaryId = collateralPrimaryId;
 	}
 
 
-	public String getColletralIdType() {
-		return colletralIdType;
+	public String getCollateralPrimaryIdType() {
+		return collateralPrimaryIdType;
 	}
 
 
-	public void setColletralIdType(String colletralIdType) {
-		this.colletralIdType = colletralIdType;
+	public void setCollateralPrimaryIdType(String collateralPrimaryIdType) {
+		this.collateralPrimaryIdType = collateralPrimaryIdType;
 	}
 
 
-	public String getColletralType() {
-		return colletralType;
+	public String getType() {
+		return type;
 	}
 
 
-	public void setColletralType(String colletralType) {
-		this.colletralType = colletralType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
-	public String getColletralAdditioanlIdentifiers() {
-		return colletralAdditioanlIdentifiers;
+	public String getAdditionalIdentifiers() {
+		return additionalIdentifiers;
 	}
 
 
-	public void setColletralAdditioanlIdentifiers(String colletralAdditioanlIdentifiers) {
-		this.colletralAdditioanlIdentifiers = colletralAdditioanlIdentifiers;
+	public void setAdditionalIdentifiers(String additionalIdentifiers) {
+		this.additionalIdentifiers = additionalIdentifiers;
 	}
 
 
-	public BorrowerDetailEntity getBorrowerDetailEntity() {
+	/*public BorrowerDetailEntity getBorrowerDetailEntity() {
 		return borrowerDetailEntity;
 	}
 
 
 	public void setBorrowerDetailEntity(BorrowerDetailEntity borrowerDetailEntity) {
 		this.borrowerDetailEntity = borrowerDetailEntity;
-	}
+	}*/
 
 
 	public InvoiceDetailEntity getInvoiceDetailEntity() {
@@ -105,27 +119,36 @@ public class ColletralDetailEntity {
 	public void setInvoiceDetailEntity(InvoiceDetailEntity invoiceDetailEntity) {
 		this.invoiceDetailEntity = invoiceDetailEntity;
 	}
+	
+	
 
+	/*public ValuationDetailEntity getValuation() {
+		return valuation;
+	}
+
+
+	public void setValuation(ValuationDetailEntity valuation) {
+		this.valuation = valuation;
+	}*/
+
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	@Override
 	public String toString() {
-		return "ColletralDetailEntity [colletralId=" + colletralId + ", colletralIdType=" + colletralIdType
-				+ ", colletralType=" + colletralType + ", colletralAdditioanlIdentifiers="
-				+ colletralAdditioanlIdentifiers + ", borrowerDetailEntity=" + borrowerDetailEntity
-				+ ", invoiceDetailEntity=" + invoiceDetailEntity + "]";
-	}		
+		return "ColletralDetailEntity [collateralPrimaryId=" + collateralPrimaryId + ", collateralPrimaryIdType="
+				+ collateralPrimaryIdType + ", type=" + type + ", additionalIdentifiers=" + additionalIdentifiers
+				+ ", date=" + date + ", borrowerDetailEntity=" + borrowerDetailEntity + ", invoiceDetailEntity="
+				+ invoiceDetailEntity + "]";
+	}
 
+	
+	
 }
 
-/*colletralDetails(
-	collateral_Primary_id varchar(50),
-	collateral_Primary_id_Type varchar(10) not null,
-	collateral_type varchar(8) not null DEFAULT('GST_INV'),
-	collateral_additionalIdentifiers VARCHAR(10000),
-	loan_application_no UUID,
-	borrower_applicant_id UUID,
-	PRIMARY KEY(collateral_Primary_id),
-	FOREIGN KEY(loan_application_no)
-	REFERENCES invoicedetails(loan_application_no),
-	FOREIGN KEY(borrower_applicant_id)
-	REFERENCES borrowerDetails(borrower_applicant_id)	*/

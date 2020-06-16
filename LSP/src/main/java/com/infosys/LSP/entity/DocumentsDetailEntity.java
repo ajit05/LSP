@@ -1,60 +1,68 @@
 package com.infosys.LSP.entity;
 
+
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="documestDetails")
-public class DocumentsDetailEntity {
+public class DocumentsDetailEntity   {
+	
+	/**
+	 * 
+	 */
 	
 	@Id
 	@Column(name="document_details_id")
 	private String documentDetailId;
 	
 	@Column(name="document_source")
-	private String documnetsource;
+	private String source;
 	
 	@Column(name="document_identifier")
-	private String documentIndentifier;
+	private String sourceIdentifier;
 	
 	@Column(name="document_format")
 	private String documentFormat;
 	
 	@Column(name="document_type")
-	private String documentType;
+	private String type;
 	
 	@Column(name="document_isDataInline")
-	private Boolean documnetIsDateInLine;
+	private Boolean isDataInline;
 	
 	@Column(name="document_data")
-	private String documentData;
+	private String data;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
-	@JoinColumn(name="loan_application_no")
+	@ManyToOne(targetEntity=InvoiceDetailEntity.class,cascade=CascadeType.PERSIST)	
+	@JoinColumn(name="loan_application_no")	
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
 	
 	public DocumentsDetailEntity() {
-		
+		System.out.println("in docu c entity");
 	}
-	public DocumentsDetailEntity(String documnetsource, String documentIndentifier, String documentFormat,
-			String documentType, Boolean documnetIsDateInLine, String documentData) {
+
+
+	public DocumentsDetailEntity(String source, String sourceIdentifier, String documentFormat, String type,
+			Boolean isDataInline, String data) {
 		super();
-		this.documnetsource = documnetsource;
-		this.documentIndentifier = documentIndentifier;
+		this.source = source;
+		this.sourceIdentifier = sourceIdentifier;
 		this.documentFormat = documentFormat;
-		this.documentType = documentType;
-		this.documnetIsDateInLine = documnetIsDateInLine;
-		this.documentData = documentData;
+		this.type = type;
+		this.isDataInline = isDataInline;
+		this.data = data;
 	}
 
 
@@ -68,23 +76,23 @@ public class DocumentsDetailEntity {
 	}
 
 
-	public String getDocumnetsource() {
-		return documnetsource;
+	public String getSource() {
+		return source;
 	}
 
 
-	public void setDocumnetsource(String documnetsource) {
-		this.documnetsource = documnetsource;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 
-	public String getDocumentIndentifier() {
-		return documentIndentifier;
+	public String getSourceIdentifier() {
+		return sourceIdentifier;
 	}
 
 
-	public void setDocumentIndentifier(String documentIndentifier) {
-		this.documentIndentifier = documentIndentifier;
+	public void setSourceIdentifier(String sourceIdentifier) {
+		this.sourceIdentifier = sourceIdentifier;
 	}
 
 
@@ -98,33 +106,33 @@ public class DocumentsDetailEntity {
 	}
 
 
-	public String getDocumentType() {
-		return documentType;
+	public String getType() {
+		return type;
 	}
 
 
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
-	public Boolean getDocumnetIsDateInLine() {
-		return documnetIsDateInLine;
+	public Boolean getIsDataInline() {
+		return isDataInline;
 	}
 
 
-	public void setDocumnetIsDateInLine(Boolean documnetIsDateInLine) {
-		this.documnetIsDateInLine = documnetIsDateInLine;
+	public void setIsDataInline(Boolean isDataInline) {
+		this.isDataInline = isDataInline;
 	}
 
 
-	public String getDocumentData() {
-		return documentData;
+	public String getData() {
+		return data;
 	}
 
 
-	public void setDocumentData(String documentData) {
-		this.documentData = documentData;
+	public void setData(String data) {
+		this.data = data;
 	}
 
 
@@ -150,12 +158,13 @@ public class DocumentsDetailEntity {
 
 	@Override
 	public String toString() {
-		return "DocumentsDetailEntity [documentDetailId=" + documentDetailId + ", documnetsource=" + documnetsource
-				+ ", documentIndentifier=" + documentIndentifier + ", documentFormat=" + documentFormat
-				+ ", documentType=" + documentType + ", documnetIsDateInLine=" + documnetIsDateInLine
-				+ ", documentData=" + documentData + ", borrowerDetailEntity=" + borrowerDetailEntity
+		return "DocumentsDetailEntity [documentDetailId=" + documentDetailId + ", source=" + source
+				+ ", sourceIdentifier=" + sourceIdentifier + ", documentFormat=" + documentFormat + ", type=" + type
+				+ ", isDataInline=" + isDataInline + ", data=" + data + ", borrowerDetailEntity=" + borrowerDetailEntity
 				+ ", invoiceDetailEntity=" + invoiceDetailEntity + "]";
-	}	
+	}
+	
+	
 
 }
 

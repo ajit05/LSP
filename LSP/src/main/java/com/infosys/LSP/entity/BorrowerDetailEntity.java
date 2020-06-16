@@ -1,46 +1,59 @@
 package com.infosys.LSP.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="borrowerDetails")
-public class BorrowerDetailEntity {
+public class BorrowerDetailEntity  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="borrower_applicant_id")
-	private String borrowerApplicantId;	
-	
-	@Column(name="borrower_phone")
-	private Integer borrowerPhone;
+	private String borrowerApplicantId;		
 	
 	@Column(name="borrower_guarantors")
-	private String borrowerGranter;
-	
-	@Column(name="loan_type")
-	private String loanType;
+	private String guarantors;	
 	
 	@Column(name="borrower_name")
-	private String borrowerName;
+	private String name;
+	
+	@Column(name="transaction_id")
+	private String  transactionId; 
+	
+	
+	@OneToMany(mappedBy="borrowerDetailEntity")
+	private List<ContactDetailEntity> contactDetail=new ArrayList<ContactDetailEntity>();
+	
+	@OneToMany(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
+	private List<DocumentsDetailEntity> documents;
+	
 	
 	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
-	private ContactDetailEntity contactDetailEntity;
+	private LoanTermDetailEntity terms;
 	
 	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
-	private DocumentsDetailEntity documentsDetailEntity;
+	private MasterLoanDetail masterLoanDetail;
 	
 	
-	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
-	private LoanTermDetailEntity loanTermDetailEntity;
-	
-	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
-	private ColletralDetailEntity colletralDetailEntity;
+	// YET NOT  CONFIRM ABOUT REATIONSHIP WITH COLLETRALS AND BORRWOER
+	/*@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
+	private ColletralDetailEntity collaterals;*/
 	
 
 	@OneToOne(cascade=CascadeType.PERSIST)	
@@ -48,15 +61,14 @@ public class BorrowerDetailEntity {
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
 	public BorrowerDetailEntity() {
+		System.out.println("in borr c entity");
 		
 	}
 
-	public BorrowerDetailEntity(Integer borrowerPhone, String borrowerGranter, String loanType, String borrowerName) {
+	public BorrowerDetailEntity(String guarantors, String name) {
 		super();
-		this.borrowerPhone = borrowerPhone;
-		this.borrowerGranter = borrowerGranter;
-		this.loanType = loanType;
-		this.borrowerName = borrowerName;
+		this.guarantors = guarantors;
+		this.name = name;
 	}
 
 	public String getBorrowerApplicantId() {
@@ -67,69 +79,54 @@ public class BorrowerDetailEntity {
 		this.borrowerApplicantId = borrowerApplicantId;
 	}
 
-	public Integer getBorrowerPhone() {
-		return borrowerPhone;
+	public String getGuarantors() {
+		return guarantors;
 	}
 
-	public void setBorrowerPhone(Integer borrowerPhone) {
-		this.borrowerPhone = borrowerPhone;
+	public void setGuarantors(String guarantors) {
+		this.guarantors = guarantors;
 	}
 
-	public String getBorrowerGranter() {
-		return borrowerGranter;
+	public String getName() {
+		return name;
 	}
 
-	public void setBorrowerGranter(String borrowerGranter) {
-		this.borrowerGranter = borrowerGranter;
-	}
-
-	public String getLoanType() {
-		return loanType;
-	}
-
-	public void setLoanType(String loanType) {
-		this.loanType = loanType;
-	}
-
-	public String getBorrowerName() {
-		return borrowerName;
-	}
-
-	public void setBorrowerName(String borrowerName) {
-		this.borrowerName = borrowerName;
-	}
-
-	public InvoiceDetailEntity getLoanApplicationNumber() {
-		return invoiceDetailEntity;
-	}
-
-	public void setLoanApplicationNumber(InvoiceDetailEntity invoiceDetailEntity) {
-		this.invoiceDetailEntity = invoiceDetailEntity;
-	}		
-
-	public ContactDetailEntity getContactDetailEntity() {
-		return contactDetailEntity;
-	}
-
-	public void setContactDetailEntity(ContactDetailEntity contactDetailEntity) {
-		this.contactDetailEntity = contactDetailEntity;
+	public void setName(String name) {
+		this.name = name;
 	}	
-		
-	public DocumentsDetailEntity getDocumentsDetailEntity() {
-		return documentsDetailEntity;
+	
+	public List<ContactDetailEntity> getContactDetail() {
+		return contactDetail;
 	}
 
-	public void setDocumentsDetailEntity(DocumentsDetailEntity documentsDetailEntity) {
-		this.documentsDetailEntity = documentsDetailEntity;
+	public void setContactDetail(List<ContactDetailEntity> contactDetail) {
+		this.contactDetail = contactDetail;
+	}	
+
+	public List<DocumentsDetailEntity> getDocuments() {
+		return documents;
 	}
 
-	public LoanTermDetailEntity getLoanTermDetailEntity() {
-		return loanTermDetailEntity;
+	public void setDocuments(List<DocumentsDetailEntity> documents) {
+		this.documents = documents;
 	}
 
-	public void setLoanTermDetailEntity(LoanTermDetailEntity loanTermDetailEntity) {
-		this.loanTermDetailEntity = loanTermDetailEntity;
+	public LoanTermDetailEntity getTerms() {
+		return terms;
 	}
+
+	public void setTerms(LoanTermDetailEntity terms) {
+		this.terms = terms;
+	}
+	
+	
+	/*public ColletralDetailEntity getCollaterals() {
+		return collaterals;
+	}
+
+	public void setCollaterals(ColletralDetailEntity collaterals) {
+		this.collaterals = collaterals;
+	}*/
 
 	public InvoiceDetailEntity getInvoiceDetailEntity() {
 		return invoiceDetailEntity;
@@ -137,25 +134,31 @@ public class BorrowerDetailEntity {
 
 	public void setInvoiceDetailEntity(InvoiceDetailEntity invoiceDetailEntity) {
 		this.invoiceDetailEntity = invoiceDetailEntity;
-	}
-	
+	}	
 
-	public ColletralDetailEntity getColletralDetailEntity() {
-		return colletralDetailEntity;
+	public String getTransactionId() {
+		return transactionId;
 	}
 
-	public void setColletralDetailEntity(ColletralDetailEntity colletralDetailEntity) {
-		this.colletralDetailEntity = colletralDetailEntity;
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}	
+
+	public MasterLoanDetail getMasterLoanDetail() {
+		return masterLoanDetail;
+	}
+
+	public void setMasterLoanDetail(MasterLoanDetail masterLoanDetail) {
+		this.masterLoanDetail = masterLoanDetail;
 	}
 
 	@Override
 	public String toString() {
-		return "BorrowerDetailEntity [borrowerApplicantId=" + borrowerApplicantId + ", borrowerPhone=" + borrowerPhone
-				+ ", borrowerGranter=" + borrowerGranter + ", loanType=" + loanType + ", borrowerName=" + borrowerName
-				+ ", contactDetailEntity=" + contactDetailEntity + ", documentsDetailEntity=" + documentsDetailEntity
-				+ ", loanTermDetailEntity=" + loanTermDetailEntity + ", colletralDetailEntity=" + colletralDetailEntity
+		return "BorrowerDetailEntity [borrowerApplicantId=" + borrowerApplicantId + ", guarantors=" + guarantors
+				+ ", name=" + name + ", transactionId=" + transactionId + ", contactDetail=" + contactDetail
+				+ ", documents=" + documents + ", terms=" + terms + ", masterLoanDetail=" + masterLoanDetail
 				+ ", invoiceDetailEntity=" + invoiceDetailEntity + "]";
-	}	
+	}
 	
 }
 

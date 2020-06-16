@@ -13,39 +13,38 @@ import javax.persistence.Table;
 public class AddressDetailEntity {
 	@Id
 	@Column(name="address_details_id")
-	private String addressDetailId;
-	
-	@Column(name="borrower_phone")
-	private Integer borrowerPhone;
+	private String addressDetailId;	
 	
 	@Column(name="address_type")
 	private String addressType;
 	
 	@Column(name="address_pincode")
-	private Integer pinCode;
+	private Integer pincode;
+	
+	@Column(name="address_country")
+	private String country;
 	
 	@Column(name="address_state")
-	private String addressCountry;
+	private String state;
 	
 	@Column(name="address_details")
 	private String adressDetail;
 	
 	@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="contact_details_id")
-	private ContactDetailEntity  contactDetailId;
+	private ContactDetailEntity  contactDetailEntity;
 	
 	
 	public AddressDetailEntity() {
 		
 	}
 
-	public AddressDetailEntity(Integer borrowerPhone, String addressType, Integer pinCode, String addressCountry,
-			String adressDetail) {
+
+	public AddressDetailEntity(String addressType, Integer pincode, String country, String adressDetail) {
 		super();
-		this.borrowerPhone = borrowerPhone;
 		this.addressType = addressType;
-		this.pinCode = pinCode;
-		this.addressCountry = addressCountry;
+		this.pincode = pincode;
+		this.country = country;
 		this.adressDetail = adressDetail;
 	}
 
@@ -59,15 +58,6 @@ public class AddressDetailEntity {
 		this.addressDetailId = addressDetailId;
 	}
 
-	public Integer getBorrowerPhone() {
-		return borrowerPhone;
-	}
-
-
-	public void setBorrowerPhone(Integer borrowerPhone) {
-		this.borrowerPhone = borrowerPhone;
-	}
-
 
 	public String getAddressType() {
 		return addressType;
@@ -79,20 +69,23 @@ public class AddressDetailEntity {
 	}
 
 
-	public Integer getPinCode() {
-		return pinCode;
+	public Integer getPincode() {
+		return pincode;
 	}
 
-	public void setPinCode(Integer pinCode) {
-		this.pinCode = pinCode;
+
+	public void setPincode(Integer pincode) {
+		this.pincode = pincode;
 	}
 
-	public String getAddressCountry() {
-		return addressCountry;
+
+	public String getCountry() {
+		return country;
 	}
 
-	public void setAddressCountry(String addressCountry) {
-		this.addressCountry = addressCountry;
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 
@@ -105,21 +98,33 @@ public class AddressDetailEntity {
 		this.adressDetail = adressDetail;
 	}
 
-	public ContactDetailEntity getContactDetailId() {
-		return contactDetailId;
+
+	public ContactDetailEntity getContactDetailEntity() {
+		return contactDetailEntity;
 	}
 
-	public void setContactDetailId(ContactDetailEntity contactDetailId) {
-		this.contactDetailId = contactDetailId;
+
+	public void setContactDetailEntity(ContactDetailEntity contactDetailEntity) {
+		this.contactDetailEntity = contactDetailEntity;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Override
 	public String toString() {
-		return "AddressDetailEntity [addressDetailId=" + addressDetailId + ", borrowerPhone=" + borrowerPhone
-				+ ", addressType=" + addressType + ", pinCode=" + pinCode + ", addressCountry=" + addressCountry
-				+ ", adressDetail=" + adressDetail + ", contactDetailId=" + contactDetailId + "]";
-	}	
+		return "AddressDetailEntity [addressDetailId=" + addressDetailId + ", addressType=" + addressType + ", pincode="
+				+ pincode + ", country=" + country + ", state=" + state + ", adressDetail=" + adressDetail
+				+ ", contactDetailEntity=" + contactDetailEntity + "]";
+	}
 
+	
 }
 
 

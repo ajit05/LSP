@@ -1,6 +1,10 @@
 package com.infosys.LSP.entity;
 
-import javax.persistence.CascadeType;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +15,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="invoicedetails")
-public class InvoiceDetailEntity {
+public class InvoiceDetailEntity  implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="loan_application_no")
 	private String loanApplicationNumber;
@@ -23,36 +32,45 @@ public class InvoiceDetailEntity {
 	@Column(name="invNumber")
 	private String invoiceNumber;
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private BorrowerDetailEntity borrowerDetailEntity;	
+	@Column(name="loan_type")
+	private String loanType;
 	
 	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private ContactDetailEntity contactDetailEntity;
+	private BorrowerDetailEntity borrower;
+	
+	/*@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	private ContactDetailEntity contactDetail;*/
+	
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	private List<DocumentsDetailEntity> documents;
 	
 	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private DocumentsDetailEntity documentsDetailEntity;
+	private LoanTermDetailEntity terms;
 	
 	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private LoanTermDetailEntity loanTermDetailEntity;
+	private MasterLoanDetail master;
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private MasterLoanDetail masterLoanDetail;
+	/*@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	private ValuationDetailEntity valuation;	*/
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private ValuationDetailEntity valuationDetailEntity;
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	private List<ColletralDetailEntity> collaterals=new ArrayList<ColletralDetailEntity>();
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private ColletralDetailEntity colletralDetailEntity;
+	
 	
 	public InvoiceDetailEntity() {
+		System.out.println("in iNvoie c entity");
 		
 	}
 
-	public InvoiceDetailEntity(String transactionId, String invoiceNumber) {
+	
+	public InvoiceDetailEntity(String transactionId, String invoiceNumber, String loanType) {
 		super();
 		this.transactionId = transactionId;
 		this.invoiceNumber = invoiceNumber;
+		this.loanType = loanType;
 	}
+
 
 	public String getLoanApplicationNumber() {
 		return loanApplicationNumber;
@@ -77,72 +95,80 @@ public class InvoiceDetailEntity {
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
-	@OneToOne(fetch=FetchType.LAZY,mappedBy="invoiceDetailEntity",cascade= {CascadeType.PERSIST})
-	public BorrowerDetailEntity getBorrowerDetailEntity() {
-		return borrowerDetailEntity;
+
+	public BorrowerDetailEntity getBorrower() {
+		return borrower;
 	}
 
-	public void setBorrowerDetailEntity(BorrowerDetailEntity borrowerDetailEntity) {
-		this.borrowerDetailEntity = borrowerDetailEntity;
+	public void setBorrower(BorrowerDetailEntity borrower) {
+		this.borrower = borrower;
 	}	
 
-	public ContactDetailEntity getContactDetailEntity() {
-		return contactDetailEntity;
-	}
-
-	public void setContactDetailEntity(ContactDetailEntity contactDetailEntity) {
-		this.contactDetailEntity = contactDetailEntity;
-	}	
-
-	public DocumentsDetailEntity getDocumentsDetailEntity() {
-		return documentsDetailEntity;
-	}
-
-	public void setDocumentsDetailEntity(DocumentsDetailEntity documentsDetailEntity) {
-		this.documentsDetailEntity = documentsDetailEntity;
-	}	
-
-	public LoanTermDetailEntity getLoanTermDetailEntity() {
-		return loanTermDetailEntity;
-	}
-
-	public void setLoanTermDetailEntity(LoanTermDetailEntity loanTermDetailEntity) {
-		this.loanTermDetailEntity = loanTermDetailEntity;
-	}	
-
-	public MasterLoanDetail getMasterLoanDetail() {
-		return masterLoanDetail;
-	}
-
-	public void setMasterLoanDetail(MasterLoanDetail masterLoanDetail) {
-		this.masterLoanDetail = masterLoanDetail;
-	}
 	
-	public ValuationDetailEntity getValuationDetailEntity() {
-		return valuationDetailEntity;
+
+	public List<DocumentsDetailEntity> getDocuments() {
+		return documents;
 	}
 
-	public void setValuationDetailEntity(ValuationDetailEntity valuationDetailEntity) {
-		this.valuationDetailEntity = valuationDetailEntity;
-	}	
 
-	public ColletralDetailEntity getColletralDetailEntity() {
-		return colletralDetailEntity;
+	public void setDocuments(List<DocumentsDetailEntity> documents) {
+		this.documents = documents;
 	}
 
-	public void setColletralDetailEntity(ColletralDetailEntity colletralDetailEntity) {
-		this.colletralDetailEntity = colletralDetailEntity;
+
+	public LoanTermDetailEntity getTerms() {
+		return terms;
 	}
+
+	public void setTerms(LoanTermDetailEntity terms) {
+		this.terms = terms;
+	}
+
+	public MasterLoanDetail getMaster() {
+		return master;
+	}
+
+	public void setMaster(MasterLoanDetail master) {
+		this.master = master;
+	}
+
+	/*public ValuationDetailEntity getValuation() {
+		return valuation;
+	}
+
+	public void setValuation(ValuationDetailEntity valuation) {
+		this.valuation = valuation;
+	}
+	*/
+	
+	public List<ColletralDetailEntity> getCollaterals() {
+		return collaterals;
+	}
+
+
+	public void setCollaterals(List<ColletralDetailEntity> collaterals) {
+		this.collaterals = collaterals;
+	}
+
+
+	public String getLoanType() {
+		return loanType;
+	}
+
+
+	public void setLoanType(String loanType) {
+		this.loanType = loanType;
+	}
+
 
 	@Override
 	public String toString() {
 		return "InvoiceDetailEntity [loanApplicationNumber=" + loanApplicationNumber + ", transactionId="
-				+ transactionId + ", invoiceNumber=" + invoiceNumber + ", borrowerDetailEntity=" + borrowerDetailEntity
-				+ ", contactDetailEntity=" + contactDetailEntity + ", documentsDetailEntity=" + documentsDetailEntity
-				+ ", loanTermDetailEntity=" + loanTermDetailEntity + ", masterLoanDetail=" + masterLoanDetail
-				+ ", valuationDetailEntity=" + valuationDetailEntity + ", colletralDetailEntity="
-				+ colletralDetailEntity + "]";
-	}	
+				+ transactionId + ", invoiceNumber=" + invoiceNumber + ", loanType=" + loanType + ", borrower="
+				+ borrower +  ", documents=" + documents + ", terms=" + terms
+				+ ", master=" + master /*+ ", valuation=" + valuation */+ ", collaterals=" + collaterals + "]";
+	}
+	
 }
 
 

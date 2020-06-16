@@ -38,6 +38,8 @@ public class MasterLoanDetail {
 	
 	public MasterLoanDetail() {
 		
+		System.out.println("in master....");
+		
 	}
 
 	public MasterLoanDetail(String loanStatus, String lenderPrimaryId, String lenderBank, String lendercategory) {

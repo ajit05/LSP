@@ -27,16 +27,16 @@ public class LoanTermDetailEntity {
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	/*@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="transaction_id")	
-	private InvoiceDetailEntity invoiceDetailEntityTrx;
+	private InvoiceDetailEntity invoiceDetailEntityTrx;*/
 	
 	@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="borrower_applicant_id")
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
 	public LoanTermDetailEntity(){
-		
+		System.out.println("----------LOanTERMM-----");
 	}
 
 	public LoanTermDetailEntity(double requestAmount, String currency) {
@@ -77,13 +77,7 @@ public class LoanTermDetailEntity {
 		this.invoiceDetailEntity = invoiceDetailEntity;
 	}
 
-	public InvoiceDetailEntity getInvoiceDetailEntityTrx() {
-		return invoiceDetailEntityTrx;
-	}
-
-	public void setInvoiceDetailEntityTrx(InvoiceDetailEntity invoiceDetailEntityTrx) {
-		this.invoiceDetailEntityTrx = invoiceDetailEntityTrx;
-	}
+	
 
 	public BorrowerDetailEntity getBorrowerDetailEntity() {
 		return borrowerDetailEntity;
@@ -97,7 +91,7 @@ public class LoanTermDetailEntity {
 	public String toString() {
 		return "LoanTermDetailEntity [loanTermId=" + loanTermId + ", requestAmount=" + requestAmount + ", currency="
 				+ currency + ", invoiceDetailEntity=" + invoiceDetailEntity + ", invoiceDetailEntityTrx="
-				+ invoiceDetailEntityTrx + ", borrowerDetailEntity=" + borrowerDetailEntity + "]";
+				 + borrowerDetailEntity + "]";
 	}
 	
 	

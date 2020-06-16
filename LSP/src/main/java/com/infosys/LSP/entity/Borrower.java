@@ -34,10 +34,6 @@ public class Borrower {
 	private LoanDetail loanDetail;  
 	
 	
-	
-	/*@OneToOne(mappedBy="borrower")	
-	private ContactDetail contactDetail;*/
-	
 	@OneToMany(mappedBy="borrower")
 	private List<ContactDetail> contactDetail=new ArrayList<ContactDetail>();
 	

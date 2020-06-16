@@ -1,51 +1,61 @@
 package com.infosys.LSP.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="contactDetails")
-public class ContactDetailEntity {
+public class ContactDetailEntity implements Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="contact_details_id")
 	private String contactDetailId;
 	
 	@Column(name="contact_type")
-	private String contactType;
+	private String type;
 	
 	@Column(name="contact_number")
-	private Integer contactNumber;
+	private Integer phone;
 	
 	@Column(name="contact_email")
-	private String contactEmail;
+	private String email;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	
+	@OneToOne(mappedBy="contactDetailEntity",fetch = FetchType.LAZY)
+	private AddressDetailEntity  address;
+	
+	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	/*@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="loan_application_no")
-	private InvoiceDetailEntity invoiceDetailEntity;
+	private InvoiceDetailEntity invoiceDetailEntity;*/
 	
-/*	@OneToOne(mappedBy="contactDetailEntity",fetch = FetchType.LAZY)
-	private AddressDetailEntity addressDetailEntity;*/
-	
-	public ContactDetailEntity() {
-		
+	public  ContactDetailEntity() {
+		System.out.println("in contact details class");
 	}
 
-	public ContactDetailEntity(String contactType, Integer contactNumber, String contactEmail) {
+	public ContactDetailEntity(String type, Integer phone, String email) {
 		super();
-		this.contactType = contactType;
-		this.contactNumber = contactNumber;
-		this.contactEmail = contactEmail;
+		this.type = type;
+		this.phone = phone;
+		this.email = email;
 	}
 
 	public String getContactDetailId() {
@@ -56,76 +66,67 @@ public class ContactDetailEntity {
 		this.contactDetailId = contactDetailId;
 	}
 
-	public String getContactType() {
-		return contactType;
+	public String getType() {
+		return type;
 	}
 
-	public void setContactType(String contactType) {
-		this.contactType = contactType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public Integer getContactNumber() {
-		return contactNumber;
+	public Integer getPhone() {
+		return phone;
 	}
 
-	public void setContactNumber(Integer contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setPhone(Integer phone) {
+		this.phone = phone;
 	}
 
-	public String getContactEmail() {
-		return contactEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public BorrowerDetailEntity getBorrowerDetailEntity() {
+		System.out.println("form contactdetails to adress");
 		return borrowerDetailEntity;
 	}
 
 	public void setBorrowerDetailEntity(BorrowerDetailEntity borrowerDetailEntity) {
 		this.borrowerDetailEntity = borrowerDetailEntity;
 	}
+	
 
-	public InvoiceDetailEntity getInvoiceDetailEntity() {
-		return invoiceDetailEntity;
+	public AddressDetailEntity getAddress() {
+		return address;
 	}
 
-	public void setInvoiceDetailEntity(InvoiceDetailEntity invoiceDetailEntity) {
-		this.invoiceDetailEntity = invoiceDetailEntity;
-	}	
-
-	/*public AddressDetailEntity getAddressDetailEntity() {
-		return addressDetailEntity;
+	public void setAddress(AddressDetailEntity address) {
+		this.address = address;
 	}
 
-	public void setAddressDetailEntity(AddressDetailEntity addressDetailEntity) {
-		this.addressDetailEntity = addressDetailEntity;
-	}
 	@Override
 	public String toString() {
-		return "ContactDetailEntity [contactDetailId=" + contactDetailId + ", contactType=" + contactType
-				+ ", contactNumber=" + contactNumber + ", contactEmail=" + contactEmail + ", borrowerDetailEntity="
-				+ borrowerDetailEntity + ", invoiceDetailEntity=" + invoiceDetailEntity + ", addressDetailEntity="
-				+ addressDetailEntity + "]";
-	}*/
+		return "ContactDetailEntity [contactDetailId=" + contactDetailId + ", type=" + type + ", phone=" + phone
+				+ ", email=" + email + ", address=" + address + ", borrowerDetailEntity=" + borrowerDetailEntity + "]";
+	}
+
+
 
 	
+
 }
 
-/*contactDetails(
-		contact_details_id uuid unique,
-		contact_type varchar(3)  NOT null,
-		contact_number integer not null,
-		contact_email varchar(50),
-		borrower_applicant_id uuid,
-		loan_application_no uuid,
-		PRIMARY KEY(contact_details_id),
-		FOREIGN KEY(borrower_applicant_id)
-		REFERENCES borrowerDetails(borrower_applicant_id),
-		FOREIGN KEY(loan_application_no)
-		REFERENCES invoicedetails(loan_application_no)
 
 
-*/
+/*contact_details_id uuid,
+	contact_type varchar(3)  NOT null,
+	contact_number integer not null,
+	contact_email varchar(50),
+	borrower_applicant_id uuid,
+	PRIMARY KEY(contact_details_id),
+	FOREIGN KEY(borrower_applicant_id)
+	REFERENCES borrowerDetails(borrower_applicant_id)*/

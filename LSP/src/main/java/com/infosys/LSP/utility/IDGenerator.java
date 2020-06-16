@@ -8,9 +8,15 @@ public class IDGenerator {
 		
 	}
 	
-	public String idGeneration() {		
+	public  String idGeneration() {		
 		UUID uniqueKey = UUID.randomUUID();
 		  return  uniqueKey.toString();
+	}
+	
+	public UUID  IDGeneratorUID() {	
+		
+		UUID uniqueKey = UUID.randomUUID();
+		  return  uniqueKey;
 	}
 	
 	
