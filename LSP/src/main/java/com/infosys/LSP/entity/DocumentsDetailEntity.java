@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="documestDetails")
+@Table(name="documest_details")
 public class DocumentsDetailEntity   {
 	
 	/**
@@ -29,24 +29,29 @@ public class DocumentsDetailEntity   {
 	private String sourceIdentifier;
 	
 	@Column(name="document_format")
-	private String documentFormat;
+	private String format;
 	
 	@Column(name="document_type")
 	private String type;
 	
-	@Column(name="document_isDataInline")
+	@Column(name="document_is_data_inline")
 	private Boolean isDataInline;
 	
 	@Column(name="document_data")
 	private String data;
 	
-	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.PERSIST)	
+	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.ALL)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@ManyToOne(targetEntity=InvoiceDetailEntity.class,cascade=CascadeType.PERSIST)	
+	@ManyToOne(targetEntity=InvoiceDetailEntity.class,cascade=CascadeType.ALL)	
 	@JoinColumn(name="loan_application_no")	
 	private InvoiceDetailEntity invoiceDetailEntity;
+	
+	
+	@ManyToOne(targetEntity=ColletralDetailEntity.class,cascade=CascadeType.ALL)	
+	@JoinColumn(name="collateral_Primary_id")	
+	private ColletralDetailEntity collaterals;
 	
 	
 	public DocumentsDetailEntity() {
@@ -54,12 +59,12 @@ public class DocumentsDetailEntity   {
 	}
 
 
-	public DocumentsDetailEntity(String source, String sourceIdentifier, String documentFormat, String type,
+	public DocumentsDetailEntity(String source, String sourceIdentifier, String format, String type,
 			Boolean isDataInline, String data) {
 		super();
 		this.source = source;
 		this.sourceIdentifier = sourceIdentifier;
-		this.documentFormat = documentFormat;
+		this.format = format;
 		this.type = type;
 		this.isDataInline = isDataInline;
 		this.data = data;
@@ -97,12 +102,12 @@ public class DocumentsDetailEntity   {
 
 
 	public String getDocumentFormat() {
-		return documentFormat;
+		return format;
 	}
 
 
-	public void setDocumentFormat(String documentFormat) {
-		this.documentFormat = documentFormat;
+	public void setDocumentFormat(String format) {
+		this.format = format;
 	}
 
 
@@ -153,16 +158,37 @@ public class DocumentsDetailEntity   {
 
 	public void setInvoiceDetailEntity(InvoiceDetailEntity invoiceDetailEntity) {
 		this.invoiceDetailEntity = invoiceDetailEntity;
+	}	
+
+	public String getFormat() {
+		return format;
+	}
+
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+
+	public ColletralDetailEntity getContactDetail() {
+		return collaterals;
+	}
+
+
+	public void setContactDetail(ColletralDetailEntity collaterals) {
+		this.collaterals = collaterals;
 	}
 
 
 	@Override
 	public String toString() {
 		return "DocumentsDetailEntity [documentDetailId=" + documentDetailId + ", source=" + source
-				+ ", sourceIdentifier=" + sourceIdentifier + ", documentFormat=" + documentFormat + ", type=" + type
-				+ ", isDataInline=" + isDataInline + ", data=" + data + ", borrowerDetailEntity=" + borrowerDetailEntity
-				+ ", invoiceDetailEntity=" + invoiceDetailEntity + "]";
+				+ ", sourceIdentifier=" + sourceIdentifier + ", format=" + format + ", type=" + type + ", isDataInline="
+				+ isDataInline + ", data=" + data + ", borrowerDetailEntity=" + borrowerDetailEntity
+				+ ", invoiceDetailEntity=" + invoiceDetailEntity + ", collaterals=" + collaterals + "]";
 	}
+
+	
 	
 	
 

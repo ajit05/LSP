@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="masterLoanDetails")
+@Table(name="master_loan_details")
 public class MasterLoanDetail {
 	
 	@Id
@@ -28,11 +28,11 @@ public class MasterLoanDetail {
 	@Column(name="lender_category")
 	private String lendercategory;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="borrowerDetails")
+@Table(name="borrower_details")
 public class BorrowerDetailEntity  implements Serializable{
 	/**
 	 * 
@@ -40,14 +40,14 @@ public class BorrowerDetailEntity  implements Serializable{
 	@OneToMany(mappedBy="borrowerDetailEntity")
 	private List<ContactDetailEntity> contactDetail=new ArrayList<ContactDetailEntity>();
 	
-	@OneToMany(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
-	private List<DocumentsDetailEntity> documents;
+	@OneToMany(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<DocumentsDetailEntity> documents=new ArrayList<DocumentsDetailEntity>();
 	
 	
-	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private LoanTermDetailEntity terms;
 	
-	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private MasterLoanDetail masterLoanDetail;
 	
 	
@@ -56,7 +56,7 @@ public class BorrowerDetailEntity  implements Serializable{
 	private ColletralDetailEntity collaterals;*/
 	
 
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
@@ -94,7 +94,7 @@ public class BorrowerDetailEntity  implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}	
-	
+	@OneToMany(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	public List<ContactDetailEntity> getContactDetail() {
 		return contactDetail;
 	}
@@ -102,7 +102,7 @@ public class BorrowerDetailEntity  implements Serializable{
 	public void setContactDetail(List<ContactDetailEntity> contactDetail) {
 		this.contactDetail = contactDetail;
 	}	
-
+	@OneToMany(mappedBy="borrowerDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	public List<DocumentsDetailEntity> getDocuments() {
 		return documents;
 	}

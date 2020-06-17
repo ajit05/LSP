@@ -3,6 +3,7 @@ package com.infosys.LSP.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import org.hibernate.Session;
@@ -45,11 +46,18 @@ public class CreateLoanApplicationDAOImpl implements CreateLoanApplicationDAO {
 			Query<Pincode> theQuery=currentSession.createQuery(Constants.PINCODE_QUERY,Pincode.class);
 			List<Pincode> pincode = theQuery.getResultList();			
 			statusMap=createLoanAppliation.crateInvoiceDetails(invoiceDetailEntity,pincode);
+			
+			 for (Map.Entry mapElement : statusMap.entrySet()) { 
+		            String key = (String)mapElement.getKey();		          
+		           //int value = ((int)mapElement.getValue() + 10);		  
+		            System.out.println(key + " : " + key); 
+			 }
 			invoiceDetailEntityobj=createLoanAppliation.CreateLoanApplicatioSave(invoiceDetailEntity, statusMap); 
 			for(int i=0;i<invoiceDetailEntityobj.size();i++) {
 				System.out.println("-------oooooooooooooooo---------"+i);				
 				
 				currentSession.persist(invoiceDetailEntityobj.get(i));	
+				
 			}
 			return loanApplicationStatus;
 	}

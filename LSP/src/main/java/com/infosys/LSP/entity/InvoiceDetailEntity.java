@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="invoicedetails")
+@Table(name="invoice_details")
 public class InvoiceDetailEntity  implements Serializable {
 	
 	/**
@@ -29,31 +30,31 @@ public class InvoiceDetailEntity  implements Serializable {
 	@Column(name="transaction_id")
 	private String transactionId;	
 	
-	@Column(name="invNumber")
+	@Column(name="inv_number")
 	private String invoiceNumber;
 	
 	@Column(name="loan_type")
 	private String loanType;
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private BorrowerDetailEntity borrower;
 	
-	/*@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private ContactDetailEntity contactDetail;*/
+	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	private ContactDetailEntity contactDetail;
 	
-	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
-	private List<DocumentsDetailEntity> documents;
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<DocumentsDetailEntity> documents=new  ArrayList<DocumentsDetailEntity>();
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private LoanTermDetailEntity terms;
 	
-	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private MasterLoanDetail master;
 	
 	/*@OneToOne(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
 	private ValuationDetailEntity valuation;	*/
 	
-	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<ColletralDetailEntity> collaterals=new ArrayList<ColletralDetailEntity>();
 	
 	
@@ -105,7 +106,7 @@ public class InvoiceDetailEntity  implements Serializable {
 	}	
 
 	
-
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	public List<DocumentsDetailEntity> getDocuments() {
 		return documents;
 	}
@@ -140,7 +141,7 @@ public class InvoiceDetailEntity  implements Serializable {
 		this.valuation = valuation;
 	}
 	*/
-	
+	@OneToMany(mappedBy="invoiceDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	public List<ColletralDetailEntity> getCollaterals() {
 		return collaterals;
 	}
@@ -159,15 +160,27 @@ public class InvoiceDetailEntity  implements Serializable {
 	public void setLoanType(String loanType) {
 		this.loanType = loanType;
 	}
+	
+	
+
+	public ContactDetailEntity getContactDetail() {
+		return contactDetail;
+	}
+
+
+	public void setContactDetail(ContactDetailEntity contactDetail) {
+		this.contactDetail = contactDetail;
+	}
 
 
 	@Override
 	public String toString() {
 		return "InvoiceDetailEntity [loanApplicationNumber=" + loanApplicationNumber + ", transactionId="
 				+ transactionId + ", invoiceNumber=" + invoiceNumber + ", loanType=" + loanType + ", borrower="
-				+ borrower +  ", documents=" + documents + ", terms=" + terms
-				+ ", master=" + master /*+ ", valuation=" + valuation */+ ", collaterals=" + collaterals + "]";
+				+ borrower + ", contactDetail=" + contactDetail + ", documents=" + documents + ", terms=" + terms
+				+ ", master=" + master + ", collaterals=" + collaterals + "]";
 	}
+
 	
 }
 

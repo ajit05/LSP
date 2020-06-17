@@ -1,5 +1,7 @@
 package com.infosys.LSP.entity;
 
+i
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,11 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="colletralDetails")
+@Table(name="colletral_details")
 public class ColletralDetailEntity {	
 
 	@Id
@@ -24,7 +27,7 @@ public class ColletralDetailEntity {
 	@Column(name="collateral_type")
 	private String type;
 	
-	@Column(name="collateral_additionalIdentifiers")
+	@Column(name="collateral_additional_identifiers")
 	private String additionalIdentifiers;
 	
 	@Column(name="Invoice_date")
@@ -32,19 +35,18 @@ public class ColletralDetailEntity {
 	
 	/*@OneToOne(mappedBy="colletralDetailEntity",fetch = FetchType.LAZY)
 	private ValuationDetailEntity valuation;*/
-
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
-	@JoinColumn(name="borrower_applicant_id")	
-	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)	
+	@ManyToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
+	@OneToMany(mappedBy="colletralDetailEntity",fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+	private List<DocumentsDetailEntity> documents;
+	
 	
 	public ColletralDetailEntity() {
-		System.out.println("in colletral c entity");
+		super();
 		
 	}
 
@@ -138,15 +140,26 @@ public class ColletralDetailEntity {
 
 	public void setDate(String date) {
 		this.date = date;
+	}	
+	
+	@OneToMany(mappedBy="colletralDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	public List<DocumentsDetailEntity> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<DocumentsDetailEntity> documents) {
+		this.documents = documents;
 	}
 
 	@Override
 	public String toString() {
 		return "ColletralDetailEntity [collateralPrimaryId=" + collateralPrimaryId + ", collateralPrimaryIdType="
 				+ collateralPrimaryIdType + ", type=" + type + ", additionalIdentifiers=" + additionalIdentifiers
-				+ ", date=" + date + ", borrowerDetailEntity=" + borrowerDetailEntity + ", invoiceDetailEntity="
-				+ invoiceDetailEntity + "]";
+				+ ", date=" + date + ", invoiceDetailEntity="
+				+ invoiceDetailEntity + ", documents=" + documents + "]";
 	}
+	
+	
 
 	
 	

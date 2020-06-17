@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="contactDetails")
+@Table(name="contact_details")
 public class ContactDetailEntity implements Serializable{
 	
 	
@@ -36,16 +36,16 @@ public class ContactDetailEntity implements Serializable{
 	private String email;
 	
 	
-	@OneToOne(mappedBy="contactDetailEntity",fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="contactDetailEntity",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private AddressDetailEntity  address;
 	
-	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.PERSIST)	
+	@ManyToOne(targetEntity=BorrowerDetailEntity.class,cascade=CascadeType.ALL)	
 	@JoinColumn(name="borrower_applicant_id")	
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
-	/*@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.PERSIST)	
 	@JoinColumn(name="loan_application_no")
-	private InvoiceDetailEntity invoiceDetailEntity;*/
+	private InvoiceDetailEntity invoiceDetailEntity;
 	
 	public  ContactDetailEntity() {
 		System.out.println("in contact details class");
@@ -107,13 +107,25 @@ public class ContactDetailEntity implements Serializable{
 	public void setAddress(AddressDetailEntity address) {
 		this.address = address;
 	}
+	
+	
+
+	public InvoiceDetailEntity getInvoiceDetailEntity() {
+		return invoiceDetailEntity;
+	}
+
+	public void setInvoiceDetailEntity(InvoiceDetailEntity invoiceDetailEntity) {
+		this.invoiceDetailEntity = invoiceDetailEntity;
+	}
 
 	@Override
 	public String toString() {
 		return "ContactDetailEntity [contactDetailId=" + contactDetailId + ", type=" + type + ", phone=" + phone
-				+ ", email=" + email + ", address=" + address + ", borrowerDetailEntity=" + borrowerDetailEntity + "]";
+				+ ", email=" + email + ", address=" + address + ", borrowerDetailEntity=" + borrowerDetailEntity
+				+ ", invoiceDetailEntity=" + invoiceDetailEntity + "]";
 	}
-
+	
+	
 
 
 	

@@ -38,7 +38,7 @@ public class LoanApplicationValidation {
 		byte[] base64Decoded = DatatypeConverter.parseBase64Binary(base64Encoded);
 		Gson gson = new Gson(); 
 		Address address = gson.fromJson(new String(base64Decoded), Address.class);		
-		map.put("rgdt",address.getRgdt());
+		map.put("rgdt","05/05/2020"/*address.getRgdt()*/);
 		map.put("tradeNam",address.getTradeNam());
 		return map;      
 		

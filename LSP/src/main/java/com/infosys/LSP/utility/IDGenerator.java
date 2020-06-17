@@ -13,10 +13,10 @@ public class IDGenerator {
 		  return  uniqueKey.toString();
 	}
 	
-	public UUID  IDGeneratorUID() {	
+	public String  IDGeneratorUID() {	
 		
 		UUID uniqueKey = UUID.randomUUID();
-		  return  uniqueKey;
+		  return  uniqueKey.toString();
 	}
 	
 	

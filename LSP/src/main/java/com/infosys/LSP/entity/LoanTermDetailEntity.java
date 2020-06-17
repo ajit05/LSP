@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="loanTermDetails")
+@Table(name="loanterm_details")
 public class LoanTermDetailEntity {
 	
 	@Id
@@ -23,15 +23,15 @@ public class LoanTermDetailEntity {
 	@Column(name="currency")
 	private String currency;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="loan_application_no")
 	private InvoiceDetailEntity invoiceDetailEntity;
 	
-	/*@OneToOne(cascade=CascadeType.PERSIST)	
+	/*@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="transaction_id")	
 	private InvoiceDetailEntity invoiceDetailEntityTrx;*/
 	
-	@OneToOne(cascade=CascadeType.PERSIST)	
+	@OneToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="borrower_applicant_id")
 	private BorrowerDetailEntity borrowerDetailEntity;
 	
@@ -90,10 +90,9 @@ public class LoanTermDetailEntity {
 	@Override
 	public String toString() {
 		return "LoanTermDetailEntity [loanTermId=" + loanTermId + ", requestAmount=" + requestAmount + ", currency="
-				+ currency + ", invoiceDetailEntity=" + invoiceDetailEntity + ", invoiceDetailEntityTrx="
-				 + borrowerDetailEntity + "]";
-	}
-	
+				+ currency + ", invoiceDetailEntity=" + invoiceDetailEntity + ", borrowerDetailEntity="
+				+ borrowerDetailEntity + "]";
+	}	
 	
 
 }
