@@ -55,6 +55,7 @@ public class DocumentsDetailEntity   {
 	
 	
 	public DocumentsDetailEntity() {
+		super();
 		System.out.println("in docu c entity");
 	}
 
